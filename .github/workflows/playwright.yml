@@ -1,0 +1,65 @@
+name: Playwright Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      TEST_ENV: ci
+      HEADLESS: "true"
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.14.2'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        playwright install --with-deps
+    - name: Run Playwright tests
+      run: |
+        python -m pytest --alluredir=allure-results
+    - name: Upload Allure results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: allure-results
+        path: allure-results
+        retention-days: 30
+    - name: Get Allure history
+      uses: actions/checkout@v4
+      if: always()
+      continue-on-error: true
+      with:
+        ref: gh-pages
+        path: gh-pages
+    - name: Allure Report action
+      uses: simple-elf/allure-report-action@master
+      if: always()
+      with:
+        allure_results: allure-results
+        allure_history: gh-pages
+        keep_reports: 20
+    - name: Verify Allure history is generated
+      if: always()
+      run: |
+        if [ ! -d gh-pages ]; then echo "gh-pages directory not found"; ls -la; exit 1; fi
+        if [ -z "$(ls -A gh-pages)" ]; then echo "gh-pages is empty"; ls -la gh-pages; exit 1; fi
+    - name: Deploy report to Github Pages
+      if: always()
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_branch: gh-pages
+        publish_dir: gh-pages
+        force_orphan: true
+

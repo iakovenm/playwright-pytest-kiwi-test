@@ -1,0 +1,6 @@
+pytest
+pytest-playwright
+pytest-bdd
+python-dotenv
+allure-pytest
+
