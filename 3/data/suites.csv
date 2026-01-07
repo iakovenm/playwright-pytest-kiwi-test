@@ -1,0 +1,2 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"/home/runner/work/playwright-pytest-kiwi-test/playwright-pytest-kiwi-test/tests/features/basic_search.feature: T1 - One way flight search","7337","test_one_way_flight_search","tests.steps","Wed Jan 07 07:31:56 UTC 2026","passed","Wed Jan 07 07:32:03 UTC 2026","","test_basic_search_steps","",""

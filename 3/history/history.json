@@ -1,0 +1,1 @@
+{"b1c3a92b8744976ace3baa19bd0930bd":{"statistic":{"failed":0,"broken":0,"skipped":0,"passed":1,"unknown":0,"total":1},"items":[{"uid":"ce3e89e894c26968","reportUrl":"https://iakovenm.github.io/playwright-pytest-kiwi-test/3/#testresult/ce3e89e894c26968","status":"passed","time":{"start":1767771116027,"stop":1767771123364,"duration":7337}}]}}
